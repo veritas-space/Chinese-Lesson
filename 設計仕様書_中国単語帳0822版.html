@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>汉语卡片 設計資料</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --ground:#F7F5F0;
+  --surface:#FFFFFF;
+  --surface-2:#EFECE4;
+  --ink:#1B2A4A;
+  --ink-2:#55648A;
+  --ink-3:#8E99B2;
+  --rule:#DED9CC;
+  --rule-2:#EAE6DB;
+  --accent:#20355E;
+  --seal:#B7362A;
+  --seal-soft:#F6E4E0;
+  --good:#2E6B4F;
+  --good-soft:#E7F0EA;
+  --code-bg:#F1EFE8;
+  --shadow:0 1px 2px rgba(27,42,74,.05), 0 10px 30px rgba(27,42,74,.07);
+  --rail:290px;
+  --measure:74ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14171E;
+    --surface:#1A1E27;
+    --surface-2:#222834;
+    --ink:#DCE4F2;
+    --ink-2:#94A2BE;
+    --ink-3:#66748F;
+    --rule:#2C3444;
+    --rule-2:#232A37;
+    --accent:#93ACDE;
+    --seal:#E68475;
+    --seal-soft:#3A2523;
+    --good:#6FBF97;
+    --good-soft:#1E2E27;
+    --code-bg:#1F242F;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14171E;
+  --surface:#1A1E27;
+  --surface-2:#222834;
+  --ink:#DCE4F2;
+  --ink-2:#94A2BE;
+  --ink-3:#66748F;
+  --rule:#2C3444;
+  --rule-2:#232A37;
+  --accent:#93ACDE;
+  --seal:#E68475;
+  --seal-soft:#3A2523;
+  --good:#6FBF97;
+  --good-soft:#1E2E27;
+  --code-bg:#1F242F;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.28);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  font-size:15.5px;
+  line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"palt" 1;
+}
+
+/* ===== shell ===== */
+.wrap{display:flex;align-items:flex-start;gap:0;max-width:1240px;margin:0 auto}
+
+/* ===== rail ===== */
+.rail{
+  width:var(--rail);flex:0 0 var(--rail);
+  position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;
+  border-right:1px solid var(--rule);
+  background:var(--ground);
+  padding:26px 22px 20px;
+}
+.mark{display:flex;align-items:center;gap:11px;margin-bottom:24px;flex:0 0 auto}
+.tzg{
+  position:relative;width:34px;height:34px;flex:0 0 34px;
+  border:1.5px solid var(--seal);border-radius:3px;
+  display:grid;place-items:center;
+}
+.tzg::before,.tzg::after{content:"";position:absolute;pointer-events:none}
+.tzg::before{left:50%;top:3px;bottom:3px;border-left:1px dashed var(--seal);opacity:.5}
+.tzg::after{top:50%;left:3px;right:3px;border-top:1px dashed var(--seal);opacity:.5}
+.tzg span{
+  font-family:"Zen Old Mincho",serif;font-weight:700;font-size:17px;
+  color:var(--seal);line-height:1;position:relative;z-index:1;
+}
+.mark-t{font-family:"Zen Old Mincho",serif;font-weight:700;font-size:16px;letter-spacing:.06em;line-height:1.3}
+.mark-t small{display:block;font-family:"JetBrains Mono",monospace;font-weight:400;font-size:9.5px;letter-spacing:.14em;color:var(--ink-3);margin-top:2px}
+
+.tabs{display:flex;flex-direction:column;gap:2px;flex:0 0 auto;margin-bottom:20px}
+.tab{
+  appearance:none;border:none;background:none;cursor:pointer;
+  font:inherit;text-align:left;color:var(--ink-2);
+  padding:9px 12px;border-radius:7px;
+  display:flex;flex-direction:column;gap:1px;
+  border-left:2px solid transparent;
+  transition:background .15s,color .15s;
+}
+.tab:hover{background:var(--surface-2);color:var(--ink)}
+.tab-t{font-family:"Zen Old Mincho",serif;font-weight:700;font-size:14.5px;letter-spacing:.03em}
+.tab-s{font-size:11px;color:var(--ink-3);line-height:1.5}
+.tab[aria-current="true"]{
+  background:var(--surface);color:var(--ink);
+  border-left-color:var(--seal);border-radius:0 7px 7px 0;
+  box-shadow:var(--shadow);
+}
+.tab[aria-current="true"] .tab-s{color:var(--ink-2)}
+
+.toc-h{
+  font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.18em;
+  color:var(--ink-3);text-transform:uppercase;
+  padding:0 12px 8px;border-top:1px solid var(--rule);padding-top:16px;flex:0 0 auto;
+}
+.toc{overflow-y:auto;flex:1 1 auto;min-height:0;padding-bottom:16px;margin-right:-8px;padding-right:8px}
+.toc a{
+  display:block;padding:5px 12px;border-radius:6px;
+  font-size:12.5px;line-height:1.5;color:var(--ink-2);text-decoration:none;
+  border-left:2px solid transparent;
+}
+.toc a:hover{background:var(--surface-2);color:var(--ink)}
+.toc a.on{color:var(--accent);font-weight:700;border-left-color:var(--accent);background:var(--surface-2)}
+.toc a .n{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--ink-3);margin-right:7px}
+.toc a.on .n{color:var(--accent)}
+
+/* ===== main ===== */
+.main{flex:1 1 auto;min-width:0;padding:44px 46px 120px}
+.doc{display:none;width:100%;max-width:min(var(--measure),100%)}
+.doc.on{display:block}
+
+.doc-head{margin-bottom:40px;padding-bottom:26px;border-bottom:1px solid var(--rule)}
+.eyebrow{
+  margin:0 0 8px;font-family:"JetBrains Mono",monospace;
+  font-size:10px;letter-spacing:.26em;color:var(--seal);text-transform:uppercase;
+}
+.doc-head h1{
+  margin:0;font-family:"Zen Old Mincho",serif;font-weight:900;
+  font-size:38px;line-height:1.25;letter-spacing:.02em;text-wrap:balance;
+}
+.lede{margin:10px 0 0;color:var(--ink-2);font-size:14.5px}
+
+/* ===== typography ===== */
+.doc h2{
+  font-family:"Zen Old Mincho",serif;font-weight:700;
+  font-size:24px;line-height:1.4;letter-spacing:.02em;text-wrap:balance;
+  margin:64px 0 18px;padding-top:22px;border-top:1px solid var(--rule);
+  scroll-margin-top:24px;
+}
+.doc h2:first-of-type{margin-top:0}
+/* 区切り線の直後に見出しが来ると罫線が二重になる */
+.doc hr + h2{border-top:none;padding-top:0;margin-top:30px}
+.doc h3{
+  font-family:"Zen Old Mincho",serif;font-weight:700;
+  font-size:17.5px;line-height:1.5;letter-spacing:.02em;text-wrap:balance;
+  margin:38px 0 12px;
+}
+.doc h4{font-size:14.5px;font-weight:700;margin:26px 0 8px;color:var(--ink-2)}
+.doc p{margin:0 0 15px}
+.doc a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+.doc strong{font-weight:700}
+.doc ul,.doc ol{margin:0 0 16px;padding-left:1.35em}
+.doc li{margin:0 0 5px}
+.doc li::marker{color:var(--ink-3)}
+.doc li.chk{list-style:none;position:relative}
+.doc li.chk::before{
+  content:"";position:absolute;left:-1.15em;top:.58em;
+  width:10px;height:10px;border:1.5px solid var(--ink-3);border-radius:2px;
+}
+.doc hr{border:none;border-top:1px solid var(--rule);margin:44px 0}
+
+/* ===== code ===== */
+code{
+  font-family:"JetBrains Mono","SFMono-Regular",monospace;
+  font-size:.855em;background:var(--code-bg);
+  padding:.14em .42em;border-radius:4px;
+  border:1px solid var(--rule-2);
+}
+pre{
+  background:var(--code-bg);border:1px solid var(--rule);border-radius:9px;
+  padding:15px 17px;overflow-x:auto;margin:0 0 20px;
+  line-height:1.7;
+}
+pre code{background:none;border:none;padding:0;font-size:12.6px;color:var(--ink)}
+
+/* ===== tables ===== */
+.tw{overflow-x:auto;margin:0 0 22px;border:1px solid var(--rule);border-radius:9px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.4px;line-height:1.7}
+th,td{padding:9px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule-2)}
+thead th{
+  background:var(--surface-2);color:var(--ink-2);
+  font-family:"JetBrains Mono",monospace;font-weight:600;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap;border-bottom:1px solid var(--rule);
+}
+tbody tr:last-child td{border-bottom:none}
+td code{font-size:12px;white-space:nowrap}
+td:first-child{font-variant-numeric:tabular-nums}
+
+/* ===== blockquote as callout ===== */
+blockquote{
+  margin:0 0 22px;padding:13px 16px;
+  background:var(--seal-soft);border-radius:9px;
+  border-left:2px solid var(--seal);
+  font-size:14px;
+}
+blockquote p{margin:0 0 8px}
+blockquote p:last-child{margin:0}
+blockquote strong{color:var(--seal)}
+blockquote code{background:var(--surface);border-color:var(--rule)}
+
+/* ===== theme toggle ===== */
+.tt{
+  position:fixed;top:14px;right:16px;z-index:20;
+  appearance:none;border:1px solid var(--rule);background:var(--surface);
+  color:var(--ink-2);font:inherit;font-size:11px;letter-spacing:.06em;
+  padding:6px 12px;border-radius:20px;cursor:pointer;box-shadow:var(--shadow);
+}
+.tt:hover{color:var(--ink)}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ===== responsive ===== */
+.railtoggle{display:none}
+@media (max-width:1000px){
+  .wrap{flex-direction:column;align-items:stretch}
+  .rail{
+    position:static;width:100%;flex:0 0 auto;height:auto;
+    border-right:none;border-bottom:1px solid var(--rule);
+    padding:18px 20px;
+  }
+  .tabs{flex-direction:row;gap:6px;overflow-x:auto;margin-bottom:0;padding-bottom:2px}
+  .tab{flex:1 0 auto;border-left:none;border-bottom:2px solid transparent;border-radius:7px}
+  .tab[aria-current="true"]{border-left:none;border-bottom-color:var(--seal);border-radius:7px}
+  .toc,.toc-h{display:none}
+  .main{padding:30px 20px 90px}
+  .doc-head h1{font-size:29px}
+  .doc h2{font-size:21px;margin-top:48px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+</head>
+<body>
+<button class="tt" id="tt" type="button">表示切替</button>
+
+<div class="wrap">
+  <nav class="rail">
+    <div class="mark">
+      <div class="tzg"><span>学</span></div>
+      <div class="mark-t">汉语卡片<small>DESIGN DOCS</small></div>
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="tab" data-go="spec" type="button"><span class="tab-t">設計仕様書</span><span class="tab-s">構造・データモデル・アルゴリズム</span></button>
+      <button class="tab" data-go="manual" type="button"><span class="tab-t">取扱説明書</span><span class="tab-s">使い方と困ったときの対処</span></button>
+      <button class="tab" data-go="roadmap" type="button"><span class="tab-t">改修・拡張提案</span><span class="tab-s">直すべき点と次に足すもの</span></button>
+    </div>
+    <div class="toc-h">目次</div>
+    <div class="toc" id="toc"></div>
+  </nav>
+
+  <main class="main" id="main">
+<article class="doc" id="doc-spec" data-doc="spec">
+  <header class="doc-head">
+    <p class="eyebrow">汉语卡片</p>
+    <h1>設計仕様書</h1>
+    <p class="lede">構造・データモデル・アルゴリズム</p>
+  </header>
+<ul>
+<li><strong>対象ファイル</strong>: <code>Chinesewords_0822.html</code></li>
+<li><strong>版</strong>: 2026-08-22 時点のソースに基づく</li>
+<li><strong>文書の目的</strong>: 再設計・改修を行う人（および AI）が、このファイルを開かずとも全体構造を把握できるようにすること</li>
+</ul>
+<hr />
+<h2>1. 概要</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>種別</td>
+<td>単一ファイル完結型の Web アプリ（SPA）</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>中国語単語帳。FSRS-5 による間隔反復学習</td>
+</tr>
+<tr>
+<td>ファイルサイズ</td>
+<td>約 434 KB（うち語彙データが約 350 KB）</td>
+</tr>
+<tr>
+<td>総行数</td>
+<td>1,685 行</td>
+</tr>
+<tr>
+<td>収録語数</td>
+<td>2,568 語（初期データ）</td>
+</tr>
+<tr>
+<td>外部依存</td>
+<td><strong>ゼロ</strong>。CDN・フォント・API 呼び出しを一切行わない</td>
+</tr>
+<tr>
+<td>ビルド</td>
+<td>不要。ファイルをブラウザで開けば動作する</td>
+</tr>
+<tr>
+<td>対象環境</td>
+<td>iOS Safari を主眼に置いたモバイル最適化。Claude のプレビュー内でも動作</td>
+</tr>
+<tr>
+<td>言語</td>
+<td>UI は日本語、学習対象は中国語（簡体字）</td>
+</tr>
+</tbody>
+</table></div>
+<h3>設計思想</h3>
+<ol>
+<li><strong>1 ファイルで完結する</strong> — 配布・バックアップ・移行が「ファイルを 1 つコピーする」だけで済む。</li>
+<li><strong>オフラインで完全に動く</strong> — ネットワークを一切必要としない。</li>
+<li><strong>AI 連携はコピー＆ペーストで行う</strong> — アプリから API を叩かない。プロンプトを生成してユーザーに渡し、返ってきた JSON を貼り戻してもらう。API キーも通信も不要。</li>
+<li><strong>データを失わないことを最優先する</strong> — 保存の多重リトライ、退避コピー、CSV 書き出しを用意している。</li>
+</ol>
+<hr />
+<h2>2. ファイル構造</h2>
+<pre><code>Chinesewords_0822.html （1,685 行）
+├─ &lt;head&gt;
+│   └─ &lt;style&gt;                     9-274行   全 CSS（約 250 行）
+├─ &lt;body&gt;
+│   ├─ #app                        258-272行 ヘッダ + &lt;main id=&quot;main&quot;&gt;
+│   ├─ .toast / #errbar            273-274行 通知・エラー帯
+│   ├─ &lt;noscript&gt;                  275行
+│   ├─ &lt;script&gt; ①                  277-295行 const CARDS = [...] 語彙データのみ
+│   └─ &lt;script&gt; ②                  296-1682行 アプリ本体（約 1,390 行）
+└─ &lt;/html&gt;
+</code></pre>
+<p><code>&lt;script&gt;</code> を 2 つに分けているのは、<strong>データとロジックを行単位で分離するため</strong>。語彙データは 279 行目の 1 行（約 358 KB）に圧縮されており、ロジック側の行番号がデータ量に影響されない。エラー時に <code>window.onerror</code> が報告する行番号も安定する。</p>
+<h3><code>&lt;script&gt;</code> ② の内部構成</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>行</th>
+<th>セクション</th>
+<th>主な関数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>297-300</td>
+<td>グローバルエラー捕捉</td>
+<td><code>window.onerror</code></td>
+</tr>
+<tr>
+<td>301-323</td>
+<td><strong>FSRS-5 エンジン</strong></td>
+<td><code>D0</code> <code>S0</code> <code>retr</code> <code>nextInterval</code> <code>nextD</code> <code>recallS</code> <code>forgetS</code></td>
+</tr>
+<tr>
+<td>325-346</td>
+<td><strong>状態変数の宣言</strong></td>
+<td><code>S</code> <code>CFG</code> <code>LOG</code> <code>UC</code> <code>OV</code> <code>DL</code> <code>RL</code></td>
+</tr>
+<tr>
+<td>348-550</td>
+<td><strong>永続化層</strong></td>
+<td><code>storageGet/Set</code> <code>loadState</code> <code>saveState</code> <code>scheduleSave</code> <code>safetyBackup</code> <code>ensureBgRetry</code></td>
+</tr>
+<tr>
+<td>443-480</td>
+<td>復習履歴</td>
+<td><code>loadRL</code> <code>saveRL</code> <code>logReview</code></td>
+</tr>
+<tr>
+<td>552-617</td>
+<td><strong>採点</strong></td>
+<td><code>getSt</code> <code>previewIvl</code> <code>rate</code> <code>fmtIvl</code></td>
+</tr>
+<tr>
+<td>619-688</td>
+<td><strong>出題キュー生成</strong></td>
+<td><code>shuffle</code> <code>isReviewCard</code> <code>interleaveReview</code> <code>buildQueue</code> <code>futureDue</code></td>
+</tr>
+<tr>
+<td>690-698</td>
+<td>UI ユーティリティ</td>
+<td><code>$</code> <code>toast</code> <code>setNav</code> <code>esc</code> <code>sizeClass</code></td>
+</tr>
+<tr>
+<td>700-726</td>
+<td>ホーム画面</td>
+<td><code>renderHome</code></td>
+</tr>
+<tr>
+<td>728-809</td>
+<td>学習画面</td>
+<td><code>startSession</code> <code>renderCard</code> <code>renderFinish</code></td>
+</tr>
+<tr>
+<td>811-908</td>
+<td><strong>一覧画面</strong></td>
+<td><code>renderBrowse</code> <code>masteryScore</code> <code>browseSort</code></td>
+</tr>
+<tr>
+<td>910-962</td>
+<td>カード詳細モーダル</td>
+<td><code>formatNotes</code> <code>detailStats</code> <code>detailHTML</code> <code>showCardDetail</code></td>
+</tr>
+<tr>
+<td>964-1181</td>
+<td>追加画面</td>
+<td><code>buildPrompt</code> <code>renderAdd</code> <code>extractJSON</code> <code>saveNewCard</code></td>
+</tr>
+<tr>
+<td>1182-1386</td>
+<td>編集画面</td>
+<td><code>buildUpdatePrompt</code> <code>renderEdit</code> <code>applyEdit</code> <code>renderDiff</code> <code>deleteCard</code></td>
+</tr>
+<tr>
+<td>1388-1479</td>
+<td>設定画面</td>
+<td><code>renderSet</code></td>
+</tr>
+<tr>
+<td>1481-1667</td>
+<td>CSV 入出力</td>
+<td><code>exportCSV</code> <code>exportRevlogCSV</code> <code>parseCSV</code> <code>importCSV</code></td>
+</tr>
+<tr>
+<td>1669-1681</td>
+<td>起動処理・イベント束縛</td>
+<td>即時実行の async IIFE</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>3. データモデル</h2>
+<h3>3.1 <code>CARDS</code> — カードの実体（配列）</h3>
+<pre><code class="language-js">{ id: 1, zh: &quot;你把剪刀还给对方时…&quot;, py: &quot;nǐ bǎ jiǎn dāo…&quot;, m: &quot;ハサミを相手に返すときは…&quot;, n: &quot;&quot; }
+</code></pre>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>キー</th>
+<th>型</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>number | string</td>
+<td>一意識別子。初期データは 1〜2779 の<strong>飛び番あり整数</strong>。ユーザー追加分は <code>"u"</code> + タイムスタンプの文字列</td>
+</tr>
+<tr>
+<td><code>zh</code></td>
+<td>string</td>
+<td>中国語（簡体字）。<strong>検索・CSV 突合のキーとして使われる実質的な自然キー</strong></td>
+</tr>
+<tr>
+<td><code>py</code></td>
+<td>string</td>
+<td>声調記号付きピンイン</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>string</td>
+<td>日本語の意味</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>string</td>
+<td>例文・備考。<code>" ／ "</code> 区切りで複数項目。<code>「中国語｜日本語」</code>形式と<code>【注意】…</code>形式を解釈する</td>
+</tr>
+</tbody>
+</table></div>
+<p>初期データ 2,568 語のうち <code>n</code>（例文・備考）が入っているのは 418 語、<code>py</code> は全語に存在。</p>
+<blockquote>
+<p><strong>重要</strong>: <code>id</code> の型が number と string で混在するため、比較は必ず <code>String(a)===String(b)</code> で行っている。この規約はコード全体で守ること。</p>
+</blockquote>
+<h3>3.2 <code>S</code> — 学習状態（オブジェクト、<code>id</code> → 状態）</h3>
+<pre><code class="language-js">S[id] = { st, step, D, S, due, last, reps, lapses }
+</code></pre>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>キー</th>
+<th>型</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>st</code></td>
+<td>0-3</td>
+<td>状態。<strong>0 = 未着手 / 1 = 学習中 / 2 = 復習 / 3 = 再学習</strong></td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td>number</td>
+<td>学習ステップの現在位置（<code>LEARN_STEPS</code> の添字）</td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td>1-10</td>
+<td>FSRS の難易度（Difficulty）</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td>number</td>
+<td>FSRS の安定度（Stability、単位=日）。0.1〜36500 にクランプ</td>
+</tr>
+<tr>
+<td><code>due</code></td>
+<td>number</td>
+<td>次回出題時刻（epoch ミリ秒）</td>
+</tr>
+<tr>
+<td><code>last</code></td>
+<td>number</td>
+<td>前回採点時刻（epoch ミリ秒）。経過日数の計算に使う</td>
+</tr>
+<tr>
+<td><code>reps</code></td>
+<td>number</td>
+<td>通算採点回数</td>
+</tr>
+<tr>
+<td><code>lapses</code></td>
+<td>number</td>
+<td>復習状態から「もう一度」で落ちた回数</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><code>S</code> にエントリが無いカード＝未着手</strong>。<code>getSt(id)</code> が初回アクセス時に初期値を生成する。2,568 語すべてに最初からエントリを作る設計にはしていない（保存サイズを抑えるため）。</p>
+<h3>3.3 <code>CFG</code> — 設定</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>キー</th>
+<th>既定値</th>
+<th>取りうる値</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>retention</code></td>
+<td><code>0.9</code></td>
+<td>0.8 / 0.85 / 0.9 / 0.95</td>
+<td>目標記憶率。高いほど復習間隔が短い</td>
+</tr>
+<tr>
+<td><code>newPerDay</code></td>
+<td><code>20</code></td>
+<td>0-200</td>
+<td>1 日の新規カード上限</td>
+</tr>
+<tr>
+<td><code>dir</code></td>
+<td><code>'zh'</code></td>
+<td><code>zh</code> / <code>jp</code></td>
+<td>出題方向（表面の言語）</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td><code>'seq'</code></td>
+<td><code>seq</code> / <code>rand</code></td>
+<td><strong>新規カード</strong>の出題順</td>
+</tr>
+<tr>
+<td><code>sessionMax</code></td>
+<td><code>0</code></td>
+<td>0-500</td>
+<td>1 セッションの出題上限（0 = 無制限）</td>
+</tr>
+<tr>
+<td><code>bias</code></td>
+<td><code>'review'</code></td>
+<td><code>new</code> / <code>review</code> / <code>mix</code></td>
+<td>出題傾向</td>
+</tr>
+<tr>
+<td><code>reviewEvery</code></td>
+<td><code>0</code></td>
+<td>0-50</td>
+<td>N 問ごとに復習を挟む（0 = 無効）</td>
+</tr>
+<tr>
+<td><code>browseSort</code></td>
+<td><code>'seq'</code></td>
+<td><code>seq</code> / <code>seqd</code> / <code>mlow</code> / <code>mhigh</code></td>
+<td><strong>一覧画面の表示順</strong>（2026-08 追加）</td>
+</tr>
+</tbody>
+</table></div>
+<h3>3.4 <code>LOG</code> — 日次記録</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>キー</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>date</code></td>
+<td>集計対象日（<code>YYYY-MM-DD</code>）。日付が変われば <code>newDone</code>/<code>revDone</code> をリセット</td>
+</tr>
+<tr>
+<td><code>newDone</code></td>
+<td>その日にこなした新規カード数（新規上限の消化量）</td>
+</tr>
+<tr>
+<td><code>revDone</code></td>
+<td>その日の復習回数</td>
+</tr>
+<tr>
+<td><code>streakDays</code></td>
+<td>連続学習日数</td>
+</tr>
+<tr>
+<td><code>lastStudy</code></td>
+<td>最後に学習した日（連続判定用）</td>
+</tr>
+</tbody>
+</table></div>
+<h3>3.5 <code>UC</code> / <code>OV</code> / <code>DL</code> — 初期データへの差分</h3>
+<p>初期データ <code>CARDS</code> はソースコード上のリテラルであり書き換えられない。そこで<strong>差分方式</strong>を採っている。</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>変数</th>
+<th>型</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UC</code></td>
+<td>配列</td>
+<td>ユーザーが追加したカード。読み込み時に <code>CARDS</code> に push</td>
+</tr>
+<tr>
+<td><code>OV</code></td>
+<td>オブジェクト</td>
+<td>既存カードへの修正内容（<code>id</code> → <code>{zh,py,m,n}</code>）。読み込み時に上書き適用</td>
+</tr>
+<tr>
+<td><code>DL</code></td>
+<td>配列</td>
+<td>削除された既存カードの <code>id</code>（トゥームストーン）。読み込み時に <code>CARDS</code> から除去</td>
+</tr>
+</tbody>
+</table></div>
+<p>適用順は <code>applyLoadedPayload()</code> 内で <strong>UC 追加 → OV 上書き → DL 除去</strong> の順（388-396 行）。</p>
+<h3>3.6 <code>RL</code> — 復習履歴（revlog）</h3>
+<pre><code class="language-js">RL = [ [cardId, 採点時刻(秒), 評価1-4, 前回からの経過日数, 採点前のst], ... ]
+</code></pre>
+<p>配列の配列でサイズを切り詰めている。上限 <code>RL_MAX = 50000</code> 件、超過分は古い順に破棄。<strong>本体データとは別キーに保存され、履歴の保存に失敗しても学習状況の保存は妨げない</strong>（意図的な分離）。書き出し専用で、読み込みには対応していない。</p>
+<hr />
+<h2>4. 永続化</h2>
+<h3>4.1 保存先の抽象化</h3>
+<pre><code>storageGet(key) / storageSet(key, value)
+  ├─ window.storage が存在する場合 → Claude の会話ストレージ（storageKind='claude'）
+  ├─ localStorage が使える場合     → 端末のブラウザ内（storageKind='local'）
+  └─ どちらも不可                   → セッション内メモリのみ（storageKind='none'）
+</code></pre>
+<p><code>detectStorageKind()</code>（379-386 行）が起動時に判定する。<code>none</code> の場合はホーム画面に警告バナーを出し、ページを閉じると進捗が消える旨を伝える。</p>
+<h3>4.2 保存キー</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>キー</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hsk-fsrs-v1</code></td>
+<td>本体。<code>{s, cfg, log, uc, ov, dl}</code> を JSON 化したもの</td>
+</tr>
+<tr>
+<td><code>hsk-fsrs-v1-revlog</code></td>
+<td>復習履歴（<code>RL</code> の JSON）</td>
+</tr>
+<tr>
+<td><code>hsk-fsrs-v1-backup</code></td>
+<td><strong>常に localStorage に置かれる退避コピー</strong>。Claude 側の保存が失敗しても端末側に最新スナップショットが残る</td>
+</tr>
+</tbody>
+</table></div>
+<h3>4.3 保存フロー</h3>
+<pre><code>変更発生
+  └→ scheduleSave()          … dirty=true、600ms のデバウンス
+       └→ saveState()
+            ├─ saveInFlight があれば待つ（並行書き込みを直列化）
+            ├─ storageSet を最大 4 回試行（間隔 500 / 1,200 / 2,500 ms）
+            ├─ 成功 → dirty=false、safetyBackup() で退避コピー更新
+            └─ 失敗 → showErr（赤帯）+ showPending（再試行ボタン付き通知）
+                     + ensureBgRetry（8 秒間隔でバックグラウンド再試行）
+</code></pre>
+<p>補助的に <code>visibilitychange</code>（ページが隠れたとき）と学習完了時にも <code>saveState()</code> / <code>saveRL()</code> を呼んでフラッシュしている。</p>
+<h3>4.4 起動時の復元</h3>
+<pre><code>loadState()
+  ├─ storageGet('hsk-fsrs-v1') 成功 → applyLoadedPayload()
+  └─ 失敗 かつ storageKind==='claude'
+       └→ localStorage の 'hsk-fsrs-v1-backup' を代わりに適用
+            + dirty=true にして「未保存」扱いにし、自動再保存を開始
+</code></pre>
+<blockquote>
+<p><strong>注意</strong>: <code>applyLoadedPayload()</code> は <code>UC</code> を <code>CARDS</code> に push する。<strong>この関数を 1 回の起動で 2 回呼ぶとカードが重複する</strong>。現状の呼び出し経路では二重呼び出しは起きないが、改修時はこの前提を壊さないこと。</p>
+</blockquote>
+<h3>4.5 後方互換性の担保方法</h3>
+<pre><code class="language-js">CFG = Object.assign(CFG, o.cfg || {});
+LOG = Object.assign(LOG, o.log || {});
+</code></pre>
+<p><strong>既定値を持つオブジェクトに保存値をマージする</strong>方式のため、保存データに存在しないキーは既定値のまま残る。新しい設定項目を足しても古い保存データがそのまま読める。</p>
+<p>加えて、値の妥当性は使用側で検証する（<code>browseSort()</code> が未知の値を <code>'seq'</code> に落とす形）。<strong>新しい設定を追加するときは「既定値の宣言」＋「使用側でのフォールバック」の 2 点をセットで実装すること。</strong></p>
+<hr />
+<h2>5. FSRS-5 アルゴリズム</h2>
+<h3>5.1 定数</h3>
+<pre><code class="language-js">W = [0.40255, 1.18385, 3.173, 15.69105, 7.1949, 0.5345, 1.4604, 0.0046,
+     1.54575, 0.1192, 1.01925, 1.9395, 0.11, 0.29605, 2.2698, 0.2315,
+     2.9898, 0.51655, 0.6621]          // FSRS-5 の既定パラメータ（19 個）
+DECAY  = -0.5
+FACTOR = 0.9^(1/DECAY) - 1 = 19/81
+LEARN_STEPS   = [1, 10]   // 分。新規・学習中
+RELEARN_STEPS = [10]      // 分。再学習
+</code></pre>
+<h3>5.2 主要な式</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>関数</th>
+<th>式</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>retr(t, S)</code></td>
+<td><code>(1 + FACTOR·t/S)^DECAY</code></td>
+<td>経過 t 日後の想起率 R</td>
+</tr>
+<tr>
+<td><code>nextInterval(S, r)</code></td>
+<td><code>max(1, round(S/FACTOR · (r^(1/DECAY) − 1)))</code></td>
+<td>目標記憶率 r を満たす次回間隔（日）</td>
+</tr>
+<tr>
+<td><code>D0(g)</code></td>
+<td><code>clamp(W4 − e^(W5·(g−1)) + 1, 1, 10)</code></td>
+<td>初回難易度</td>
+</tr>
+<tr>
+<td><code>S0(g)</code></td>
+<td><code>max(W[g−1], 0.1)</code></td>
+<td>初回安定度</td>
+</tr>
+<tr>
+<td><code>nextD(D, g)</code></td>
+<td><code>clamp(W7·D0(4) + (1−W7)·(D + (−W6·(g−3))·(10−D)/9), 1, 10)</code></td>
+<td>難易度の更新（平均への回帰つき）</td>
+</tr>
+<tr>
+<td><code>recallS(D,S,R,g)</code></td>
+<td><code>clamp(S·(1 + e^W8·(11−D)·S^(−W9)·(e^(W10·(1−R))−1)·hard·easy), 0.1, 36500)</code></td>
+<td>想起成功時の安定度更新。<code>hard = W15 (g=2)</code>、<code>easy = W16 (g=4)</code></td>
+</tr>
+<tr>
+<td><code>forgetS(D,S,R)</code></td>
+<td><code>clamp(min(W11·D^(−W12)·((S+1)^W13 − 1)·e^(W14·(1−R)), S), 0.1, 36500)</code></td>
+<td>失敗時の安定度更新（必ず現在値以下）</td>
+</tr>
+</tbody>
+</table></div>
+<h3>5.3 状態遷移（<code>rate(id, g)</code>、572-608 行）</h3>
+<pre><code>        ┌─────────── g=1 ───────────┐
+        ↓                            │
+   [0 未着手] ─ g=2 ─→ [1 学習中] ──┘
+        │                  │
+        │ g=4              │ g=3 で step++、step が LEARN_STEPS を超えたら卒業
+        ↓                  ↓
+     ┌──────────── [2 復習] ────────────┐
+     │                 │                 │
+     │            g=2/3/4                │ g=1 → lapses++、安定度を forgetS で減衰
+     │      安定度を recallS で更新       ↓
+     │      due = now + nextInterval  [3 再学習] ─ g=3 で 10 分後 → 卒業して [2 復習]
+     └───────────────────────────────────┘
+</code></pre>
+<ul>
+<li>採点は必ず <code>logReview(id, g, c)</code> を<strong>更新前</strong>に呼んで履歴に記録する。</li>
+<li><code>LOG.newDone</code> は「採点前が未着手だったカード」でのみ増える。</li>
+<li><code>LOG.revDone</code> は「採点後に復習状態」または「g=1」のときに増える。</li>
+</ul>
+<h3>5.4 同一セッション内の再出題</h3>
+<p>学習ステップ（1 分後・10 分後）のカードを同じセッション中に再び出す挙動は、<strong><code>CFG.bias === 'review'</code> のときのみ</strong>有効（790 行）。他の出題傾向では再出題せず、期限が来た次回セッションに回す。</p>
+<hr />
+<h2>6. 出題キュー</h2>
+<p><code>buildQueue()</code>（646-683 行）が毎回ゼロから組み立てる。</p>
+<pre><code>全カードを 3 群に分類
+  due   … st=2 かつ 期限到来
+  learn … st=1 または 3 かつ 期限到来
+  fresh … 未着手（st=0 または S にエントリ無し）
+
+① due / learn を「期限の古い順」にソート（ランダム設定でも期限切れを放置しない）
+② fresh を CFG.order で並べ（seq=登録順 / rand=シャッフル）、
+   newPerDay − LOG.newDone 枚まで切り出す
+③ CFG.bias で連結
+      new    : [新規] + [learn] + [due]
+      review : [learn] + [due] + [新規]        ← 既定
+      mix    : [learn] + shuffle([due] + [新規])
+④ interleaveReview(q, CFG.reviewEvery) を適用（bias より優先）
+⑤ CFG.sessionMax で先頭から切り詰め
+</code></pre>
+<h3><code>interleaveReview</code> の方式</h3>
+<p>N 問ごとの位置に復習カードが来ていなければ、<strong>後方にある復習カードをその位置へ前倒しする</strong>。カードを増やす（重複出題する）方式ではない。前倒しできる復習カードが尽きたら以降はスキップして終了する。</p>
+<h3><code>renderCard</code> 側の補正（738-743 行）</h3>
+<p>キュー先頭が「学習中だが期限がまだ来ていない」カードだった場合、末尾へ回す。無限ループを避けるため <code>guard</code> でキュー長ぶんの回数に制限している。</p>
+<hr />
+<h2>7. 画面仕様</h2>
+<p>ナビゲーションは 4 タブ。<code>main.innerHTML</code> を丸ごと差し替える方式で、仮想 DOM や差分更新は行わない。</p>
+<h3>7.1 学習（ホーム）</h3>
+<ul>
+<li>当日の日付・連続日数</li>
+<li>復習 / 新規 / 今日学習 の 3 カウンタ</li>
+<li>「学習を始める」ボタン（対象 0 枚なら無効化）</li>
+<li>補助統計: 習得済み / 学習中 / 未着手、明日までの復習予定、目標記憶率、出題傾向、今回の出題数</li>
+</ul>
+<h3>7.2 学習中カード</h3>
+<ul>
+<li>進捗バー、状態タグ（新規/復習/学習中）、残り枚数</li>
+<li>表面: <code>CFG.dir</code> に応じて中国語（田字格つき）または日本語</li>
+<li>タップまたは「答えを見る」で裏面 → 一覧の詳細と<strong>同じレイアウト</strong>（<code>detailHTML()</code> を共用）</li>
+<li>4 段階評価。各ボタンに <code>previewIvl()</code> の予測間隔を表示</li>
+<li>裏面から直接「このカードを修正・削除」へ遷移可能</li>
+</ul>
+<h3>7.3 一覧（browse）</h3>
+<ul>
+<li>検索窓 + <strong>並び替えセレクト</strong>（横並び、<code>.bbar</code>）</li>
+<li>件数表示 → カードリスト（50 件ずつ、「さらに表示」で追加）</li>
+<li>項目タップでモーダル詳細 → 「編集・削除」へ</li>
+</ul>
+<p><strong>検索</strong>: <code>zh</code> / <code>py</code>（小文字化して比較）/ <code>m</code> / <code>n</code> の部分一致。</p>
+<p><strong>並び替え</strong> (<code>BSORTS</code>, 815-820 行):</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>値</th>
+<th>表示ラベル</th>
+<th>挙動</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>seq</code></td>
+<td>登録が古い順</td>
+<td><code>CARDS</code> の配列順（既定値）</td>
+</tr>
+<tr>
+<td><code>seqd</code></td>
+<td>登録が新しい順</td>
+<td><code>CARDS</code> の逆順。追加したカードは末尾に積まれるため先頭に来る</td>
+</tr>
+<tr>
+<td><code>mlow</code></td>
+<td>習熟度が低い順</td>
+<td><code>masteryScore</code> の昇順</td>
+</tr>
+<tr>
+<td><code>mhigh</code></td>
+<td>習熟度が高い順</td>
+<td><code>masteryScore</code> の降順</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>習熟度スコア</strong> (<code>masteryScore(id)</code>, 828-836 行):</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>状態</th>
+<th>スコア</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未着手（<code>S</code> にエントリ無しを含む）</td>
+<td><code>-3</code></td>
+</tr>
+<tr>
+<td>再学習（st=3）</td>
+<td><code>-2</code></td>
+</tr>
+<tr>
+<td>学習中（st=1）</td>
+<td><code>-1</code></td>
+</tr>
+<tr>
+<td>復習（st=2）</td>
+<td><code>st.S</code>（安定度、日数）。不正値なら <code>0</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>同スコアのカードは元の登録順を保つ<strong>安定ソート</strong>（インデックスを退避してタイブレークに使う）。選択値は <code>CFG.browseSort</code> に保存され、次回起動時も引き継がれる。</p>
+<h3>7.4 追加（AI 連携フロー）</h3>
+<pre><code>① 中国語を入力
+     ↓ 重複チェック（CARDS 内に同じ zh があれば拒否）
+② buildPrompt(zh) でプロンプトを生成 → ユーザーがコピーして Claude に送信
+③ 返ってきた JSON を貼り付け → extractJSON() で解析
+     ├ warn があれば警告表示
+     └ py も m も空 → 実在しない語と判断して保存フォームを開かない
+④ 内容を確認・修正して保存 → UC と CARDS に push、id = &quot;u&quot; + Date.now()
+</code></pre>
+<p><strong><code>extractJSON()</code> の三段構え</strong>（1081-1106 行）— スマホのコピペで壊れた JSON を救済する:</p>
+<ol>
+<li>コードフェンス（<code></code>json <code>``）を除去して素直に</code>JSON.parse`</li>
+<li>失敗 → <code>normalizeSmartQuotes()</code> で<strong>構造上の</strong>全角引用符（<code>“ ” „ ‟ ″ 〃 ＂</code>）のみ半角化。文字列の中身にある引用符は壊さない</li>
+<li>失敗 → <code>firstObject()</code> で波括弧の対応を数え、最初の完全なオブジェクトだけを抽出して再試行</li>
+</ol>
+<h3>7.5 編集</h3>
+<ul>
+<li>4 項目のフォーム + 「Claude で内容を更新する」プロンプト生成</li>
+<li>返ってきた JSON と現在値を<strong>項目ごとに並べて比較</strong>（<code>renderDiff</code>）</li>
+<li>各項目に「現在のまま / 置き換え / 追記」の 3 ボタン。既定は「置き換え」</li>
+<li>反映内容はテキストエリアで自由に手直しできる</li>
+<li><code>review</code> フィールドがあれば Claude からの指摘として表示</li>
+<li>削除ボタン（<code>confirm</code> で確認）</li>
+</ul>
+<p>編集の保存先は <code>applyEdit()</code> が振り分ける: ユーザー追加カードなら <code>UC</code> を、既存カードなら <code>OV</code> を更新する。</p>
+<h3>7.6 設定</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>グループ</th>
+<th>項目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>学習</td>
+<td>新規上限 / 目標記憶率 / 出題方向 / 新規カードの順序</td>
+</tr>
+<tr>
+<td>セッション</td>
+<td>1 回の出題数 / 出題傾向 / 復習を挟む間隔</td>
+</tr>
+<tr>
+<td>データ</td>
+<td>CSV 書き出し / CSV 読み込み（進捗込みの可否を選択） / 復習履歴の書き出し</td>
+</tr>
+<tr>
+<td>危険操作</td>
+<td>学習進捗をすべてリセット（<code>S</code> と <code>RL</code> を消去。カード自体は残る）</td>
+</tr>
+<tr>
+<td>情報</td>
+<td>現在の保存先の表示</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>8. CSV 入出力</h2>
+<h3>8.1 カード CSV</h3>
+<p>列（<code>CSV_COLS</code>）:</p>
+<pre><code>中国語, ピンイン, 日本語の意味, 例文・備考, 状態, 復習予定日, 安定度, 難易度, 復習回数, 間違えた回数
+</code></pre>
+<ul>
+<li>文字コード: <strong>BOM 付き UTF-8</strong>（Excel の文字化け対策）、改行 CRLF</li>
+<li>ファイル名: <code>&lt;このHTMLのファイル名&gt;_&lt;YYYYMMDDhhmmss&gt;.csv</code></li>
+<li>「状態」は日本語ラベル（<code>ST_NAME</code> / <code>ST_CODE</code> で相互変換）</li>
+<li>「復習予定日」は ISO 8601 文字列</li>
+</ul>
+<p><strong>読み込み</strong>:</p>
+<ul>
+<li><code>中国語</code> と <code>日本語の意味</code> 列は必須。無ければ形式エラー</li>
+<li><code>zh</code> が一致するカードがあれば<strong>上書き</strong>、無ければ<strong>追加</strong>（<code>id = "u" + Date.now() + "_" + 行番号</code>）</li>
+<li>「学習進捗も一緒に取り込む」チェックが有効で、状態が未着手以外なら <code>S[id]</code> を再構築</li>
+<li>パーサ <code>parseCSV()</code> は RFC 4180 準拠（引用符・エスケープ・セル内改行に対応）</li>
+</ul>
+<blockquote>
+<p><strong>既知の欠落</strong>: エクスポートに <code>step</code> と <code>last</code> の列が無い。インポート時は <code>step: 0</code>、<code>last: Date.now()</code> で再構築されるため、往復させると学習ステップ位置と経過日数の起点が失われる。安定度・難易度・期限は保たれるので実用上の影響は限定的だが、厳密な移行を求めるなら列の追加が必要（→ ROADMAP.md）。</p>
+</blockquote>
+<h3>8.2 復習履歴 CSV</h3>
+<pre><code>中国語, カードID, 復習日時, 評価, 経過日数, 復習前の状態
+</code></pre>
+<p>書き出し専用。将来の FSRS パラメータ最適化や学習分析のための素材として設計されている。</p>
+<hr />
+<h2>9. スタイル・UI 規約</h2>
+<h3>CSS 変数（9-22 行）</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>変数</th>
+<th>値</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--paper</code> / <code>--paper-2</code></td>
+<td><code>#F7F5F0</code> / <code>#EFECE4</code></td>
+<td>背景（白磁）</td>
+</tr>
+<tr>
+<td><code>--ink</code> / <code>--ink-soft</code> / <code>--ink-faint</code></td>
+<td><code>#20355E</code> / <code>#5A6B8C</code> / <code>#C4CCDC</code></td>
+<td>文字・主色（藍）</td>
+</tr>
+<tr>
+<td><code>--line</code></td>
+<td><code>#DAD5C8</code></td>
+<td>罫線</td>
+</tr>
+<tr>
+<td><code>--seal</code> / <code>--seal-soft</code></td>
+<td><code>#B7362A</code> / <code>#F3DEDA</code></td>
+<td>強調・警告（印章の朱）</td>
+</tr>
+<tr>
+<td><code>--good</code></td>
+<td><code>#2E6B4F</code></td>
+<td>肯定</td>
+</tr>
+<tr>
+<td><code>--radius</code> / <code>--shadow</code></td>
+<td><code>14px</code> / 2 段影</td>
+<td>共通形状</td>
+</tr>
+</tbody>
+</table></div>
+<p>配色を変えるときは<strong>この 10 個だけを書き換えればよい</strong>（ただし <code>renderDiff</code> 内のインラインスタイルに <code>#EDF5F0</code> <code>#CFE3D8</code> がハードコードされている。要注意）。</p>
+<h3>レイアウト規約</h3>
+<ul>
+<li>アプリ幅は <code>#app { max-width: 520px }</code> で中央寄せ</li>
+<li><code>.hanzi</code> クラスで漢字用フォント（楷体系）を指定</li>
+<li><code>sizeClass(s)</code> が文字数で自動的にフォントサイズを落とす（22 文字超 = <code>xlong</code>、10 文字超 = <code>long</code>）</li>
+<li><code>viewport</code> に <code>user-scalable=no</code> を指定しているため、フォントサイズ 16px 未満でも iOS の自動ズームは起きない</li>
+<li>セーフエリア（ノッチ）対応: <code>env(safe-area-inset-*)</code></li>
+</ul>
+<h3>命名規約</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>接頭辞</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>render*</code></td>
+<td>画面全体を描画する関数。<code>main.innerHTML</code> を差し替える</td>
+</tr>
+<tr>
+<td><code>f-*</code> / <code>e-*</code> / <code>d-*</code></td>
+<td>フォーム要素の id（追加 / 編集 / 差分比較）</td>
+</tr>
+<tr>
+<td><code>b*</code></td>
+<td>一覧（browse）関連。<code>bLimit</code> <code>bmore</code> <code>bsort</code> <code>bcount</code></td>
+</tr>
+<tr>
+<td><code>s-*</code></td>
+<td>設定画面の入力要素</td>
+</tr>
+<tr>
+<td><code>m*</code></td>
+<td>モーダル関連</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>10. エラーハンドリング</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>仕組み</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>window.onerror</code></td>
+<td>画面最上部に赤帯でメッセージと行番号を表示。「スクリーンショットして相談してください」と案内</td>
+</tr>
+<tr>
+<td><code>showErr(msg)</code></td>
+<td>同じ赤帯を任意のタイミングで出す。15 秒で自動的に消える</td>
+</tr>
+<tr>
+<td><code>toast(msg)</code></td>
+<td>画面下部に 1.8 秒表示される軽量通知</td>
+</tr>
+<tr>
+<td><code>showPending()</code></td>
+<td>未保存の変更がある間、下部に常駐する警告＋「今すぐ再試行」ボタン</td>
+</tr>
+<tr>
+<td><code>&lt;noscript&gt;</code></td>
+<td>JavaScript 無効時に、Safari で開き直すよう案内</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>11. 既知の制約と注意点</h2>
+<p>改修時に踏みやすい落とし穴を挙げる。</p>
+<ol>
+<li><strong>ピンイン検索が声調記号に非対応</strong> — <code>py</code> は <code>shì</code> のように声調記号付きで格納されているため、<code>shi</code> で検索してもヒットしない。</li>
+<li><strong>検索がインクリメンタルかつ無デバウンス</strong> — 1 文字入力ごとに 2,568 件を <code>filter</code> し、<code>innerHTML</code> を再構築する。現状の件数では体感できる遅延は無いが、語数が増えれば効いてくる。</li>
+<li><strong>削除はトゥームストーン方式</strong> — 既存カードを削除すると <code>DL</code> に <code>id</code> が残る。同じ語を CSV から再インポートすると、<code>zh</code> 一致検索は <code>CARDS</code> から除去済みのため引っかからず、<strong>新しい <code>u...</code> カードとして復活する</strong>（重複はしないが <code>id</code> が変わる）。</li>
+<li><strong><code>applyLoadedPayload()</code> の二重呼び出し禁止</strong> — <code>UC</code> を <code>CARDS</code> に push するため、2 回呼ぶとカードが重複する。</li>
+<li><strong><code>esc()</code> はシングルクォートを変換しない</strong> — 現状 HTML 属性はすべてダブルクォートで囲まれているため実害は無いが、属性をシングルクォートで書く改修をすると壊れる。</li>
+<li><strong><code>LOG.revDone</code> の計上条件</strong> — <code>else if (c.st === 2 || g === 1)</code>。学習中カードに「普通」を付けて卒業しなかった場合はカウントされない。仕様として意図的か要確認。</li>
+<li><strong><code>storageKind === 'claude'</code> は会話スコープ</strong> — Claude のプレビュー内で使う場合、別の会話ではデータを引き継げない。<strong>移行手段は CSV 書き出しのみ</strong>。</li>
+<li><strong>保存サイズ</strong> — 本体 JSON は <code>S</code> が全カードぶん埋まると約 250 KB。<code>RL</code> は上限 5 万件で 1.5〜2 MB 程度。localStorage の 5 MB 制限には収まるが、余裕は大きくない。</li>
+<li><strong><code>sessionTotal</code> のずれ</strong> — 学習中に削除したり、<code>renderCard</code> がキューを並べ替えたりすると、進捗バーの分母が実際の残数と一致しないことがある。</li>
+<li><strong>語彙データがソースコード直書き</strong> — 350 KB のリテラルを毎回パースする。起動は十分速いが、語数を大幅に増やすなら構造の見直しが必要（→ ROADMAP.md）。</li>
+</ol>
+<hr />
+<h2>12. 改修時のチェックリスト</h2>
+<p>新しい機能を足すとき、以下を確認すること。</p>
+<ul>
+<li class="chk"><code>CFG</code> に設定を追加した場合、<strong>既定値の宣言</strong>と<strong>使用側でのフォールバック</strong>の両方を書いたか</li>
+<li class="chk">保存データの形（<code>{s, cfg, log, uc, ov, dl}</code>）を変えていないか。変えるなら旧形式を読める経路を残したか</li>
+<li class="chk"><code>id</code> の比較を <code>String()</code> 経由で行っているか</li>
+<li class="chk">ユーザー入力を画面に出すとき <code>esc()</code> を通しているか</li>
+<li class="chk">新しい画面を足したら <code>setNav()</code> の配列と <code>$('#nav-*')</code> の束縛を更新したか</li>
+<li class="chk">CSV の列を増やした場合、<strong>列が無い古い CSV も読める</strong>ようにしたか（<code>ix(name)</code> が <code>-1</code> を返す前提で書く）</li>
+<li class="chk"><code>&lt;script&gt;</code> ① の行数を変えていないか（変えるとエラー行番号の目安がずれる）</li>
+<li class="chk">iPhone の実機幅（320px / 390px）でレイアウトが崩れないか</li>
+</ul>
+<hr />
+<h2>13. 変更履歴（判明している範囲）</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>日付</th>
+<th>変更</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-08-12</td>
+<td>ベース版（<code>Chinesewords_0812.html</code>）</td>
+</tr>
+<tr>
+<td>2026-08-22</td>
+<td>一覧画面に並び替えセレクトを追加。<code>CFG.browseSort</code>、<code>masteryScore()</code>、<code>BSORTS</code>、<code>.bbar</code> / <code>.bsort</code> / <code>.bcount</code> の CSS を新設。件数表示を追加。既存保存データとの互換性は既定値フォールバックで担保</td>
+</tr>
+</tbody>
+</table></div>
+</article>
+<article class="doc" id="doc-manual" data-doc="manual">
+  <header class="doc-head">
+    <p class="eyebrow">汉语卡片</p>
+    <h1>取扱説明書</h1>
+    <p class="lede">使い方と困ったときの対処</p>
+  </header>
+<p>FSRS-5 を使った中国語単語帳アプリの使い方です。</p>
+<hr />
+<h2>1. はじめに</h2>
+<h3>これは何か</h3>
+<p>中国語の単語カード（フラッシュカード）アプリです。<strong>FSRS-5</strong> という間隔反復アルゴリズムが、カードごとに「そろそろ忘れそうな頃合い」を計算して復習日を決めます。闇雲に繰り返すより少ない回数で長く覚えていられます。</p>
+<ul>
+<li>収録語数: 2,568 語（自分で追加もできます）</li>
+<li>HTML ファイル 1 つで動きます。インストール不要、ネット接続も不要</li>
+<li>進捗は自動保存されます</li>
+</ul>
+<h3>開き方</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>環境</th>
+<th>手順</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>iPhone / iPad（推奨）</strong></td>
+<td>ファイルアプリでプレビューするのではなく、<strong>共有ボタン →「Safariで開く」</strong> を選んでください。プレビュー表示では保存が効きません</td>
+</tr>
+<tr>
+<td><strong>Claude アプリ内</strong></td>
+<td>プレビューをそのまま使えます。ただし進捗は<strong>その会話の中だけ</strong>で保持されます（後述）</td>
+</tr>
+<tr>
+<td><strong>パソコン</strong></td>
+<td>ファイルをダブルクリック、またはブラウザにドラッグ＆ドロップ</td>
+</tr>
+<tr>
+<td><strong>Documents by Readdle など</strong></td>
+<td>内蔵ブラウザで開けば動きます</td>
+</tr>
+</tbody>
+</table></div>
+<h3>最初に確認すること</h3>
+<p>設定画面のいちばん下に「現在の保存先」が表示されます。</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>表示</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>このファイル・このブラウザ内</strong></td>
+<td>正常。端末に保存されます</td>
+</tr>
+<tr>
+<td><strong>Claudeの会話ストレージ</strong></td>
+<td>正常。ただしこの会話の中でのみ有効です</td>
+</tr>
+<tr>
+<td><strong>保存先なし</strong></td>
+<td>⚠️ 保存されません。画面を閉じると進捗が消えます。別の開き方を試してください</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>2. 画面の見方</h2>
+<p>上部に 4 つのタブがあります。</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>タブ</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>学習</strong></td>
+<td>今日の状況の確認と、学習の開始</td>
+</tr>
+<tr>
+<td><strong>一覧</strong></td>
+<td>全カードの検索・閲覧・編集</td>
+</tr>
+<tr>
+<td><strong>追加</strong></td>
+<td>新しい語句の登録</td>
+</tr>
+<tr>
+<td><strong>設定</strong></td>
+<td>学習設定、バックアップ、リセット</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>3. 学習する</h2>
+<h3>3.1 ホーム画面</h3>
+<pre><code>2026年8月22日（土）　連続 5 日
+
+   12        8         20
+  復習      新規     今日学習
+
+   [  学習を始める  ]
+
+習得済み 340 ／ 学習中 26 ／ 未着手 2202
+明日までの復習予定 18 枚 ／ 目標記憶率 90%
+出題傾向 復習優先 ／ 今回の出題 20 問
+</code></pre>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>数字</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>復習</strong></td>
+<td>今すぐ復習すべきカードの枚数（期限が来たもの）</td>
+</tr>
+<tr>
+<td><strong>新規</strong></td>
+<td>今日まだ出せる未学習カードの枚数（1 日の上限内）</td>
+</tr>
+<tr>
+<td><strong>今日学習</strong></td>
+<td>今日すでにこなした枚数</td>
+</tr>
+<tr>
+<td><strong>連続 N 日</strong></td>
+<td>途切れずに学習した日数</td>
+</tr>
+</tbody>
+</table></div>
+<h3>3.2 カードに答える</h3>
+<ol>
+<li>表面に中国語（または日本語）が出ます</li>
+<li>意味を思い出したら、<strong>カードをタップ</strong>するか「答えを見る」を押します</li>
+<li>裏面にピンイン・意味・例文が出ます</li>
+<li>思い出せた度合いに応じて 4 つのボタンから選びます</li>
+</ol>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ボタン</th>
+<th>使いどき</th>
+<th>次に出るまで</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>もう一度</strong></td>
+<td>思い出せなかった</td>
+<td>1 分後（または 10 分後）</td>
+</tr>
+<tr>
+<td><strong>難しい</strong></td>
+<td>思い出せたが苦労した</td>
+<td>短め</td>
+</tr>
+<tr>
+<td><strong>普通</strong></td>
+<td>普通に思い出せた</td>
+<td>標準</td>
+</tr>
+<tr>
+<td><strong>簡単</strong></td>
+<td>即座に、確実に思い出せた</td>
+<td>長め</td>
+</tr>
+</tbody>
+</table></div>
+<p>各ボタンの下に<strong>次にいつ出るかの予測</strong>が表示されているので、迷ったらそれを見て選んでください。</p>
+<blockquote>
+<p><strong>コツ</strong>: 「簡単」を使いすぎると間隔が伸びすぎて忘れます。<strong>確信を持って即答できたときだけ</strong>使うのがおすすめです。逆に「もう一度」は遠慮なく押して構いません。</p>
+</blockquote>
+<h3>3.3 学習中にカードを直す</h3>
+<p>裏面の下にある「このカードを修正・削除」から、その場で編集画面に入れます。戻ると学習を続けられます。</p>
+<hr />
+<h2>4. 一覧で探す・並べ替える</h2>
+<h3>4.1 検索</h3>
+<p>検索窓に入力すると、<strong>中国語・ピンイン・日本語の意味・例文</strong> のすべてから部分一致で探します。</p>
+<blockquote>
+<p>ピンインは声調記号つき（<code>shì</code> など）で登録されています。声調記号なしの <code>shi</code> では見つかりません。中国語か日本語で探すのが確実です。</p>
+</blockquote>
+<h3>4.2 並び替え</h3>
+<p>検索窓の右のセレクトで表示順を変えられます。<strong>選んだ順番は保存され、次に開いたときも維持されます。</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>並び</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>登録が古い順</strong></td>
+<td>最初から入っている順（既定）</td>
+</tr>
+<tr>
+<td><strong>登録が新しい順</strong></td>
+<td>最近追加した語が先頭に来ます。自分で足した語を確認するときに便利</td>
+</tr>
+<tr>
+<td><strong>習熟度が低い順</strong></td>
+<td>未着手 → 再学習 → 学習中 → 復習（記憶の定着が浅い順）。<strong>苦手な語を洗い出すのに使います</strong></td>
+</tr>
+<tr>
+<td><strong>習熟度が高い順</strong></td>
+<td>しっかり覚えている語から。学習成果の確認に</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>習熟度</strong>は、そのカードの学習状態と FSRS の「安定度」（記憶が何日もつかの推定値）から計算しています。同じ習熟度のカードは登録順を保つので、並びが毎回変わることはありません。</p>
+<h3>4.3 カードの詳細を見る</h3>
+<p>一覧の項目をタップすると、下から詳細シートが開きます。</p>
+<ul>
+<li>中国語・ピンイン・意味・例文</li>
+<li>学習状況のバッジ（次回復習日・復習回数・間違えた回数・安定度・難易度）</li>
+<li>「編集・削除」ボタン</li>
+</ul>
+<hr />
+<h2>5. 語句を追加する</h2>
+<p>このアプリは<strong>インターネットに接続しません</strong>。代わりに、Claude に聞くための文章を用意して、その返事を貼り戻す方式を採っています。</p>
+<h3>手順</h3>
+<p><strong>① 中国語を入力する</strong></p>
+<p>「追加」タブで覚えたい語句を入力し、「Claudeへ送る文を作る」を押します。すでに登録済みの語句は弾かれます。</p>
+<p><strong>② 文をコピーして Claude に送る</strong></p>
+<p>生成された文章を「この文をコピー」でコピーし、Claude との会話に貼り付けて送信します。</p>
+<p><strong>③ 返ってきた JSON を貼り付ける</strong></p>
+<p>Claude の返事（<code>{ }</code> で囲まれた部分を含む全体）をコピーして、貼り付け欄に入れ「返答を反映する」を押します。</p>
+<blockquote>
+<p>コードブロックの記号や、スマホのコピペで混ざる全角の引用符（<code>“ ”</code>）は自動で処理されます。返事の全体をそのまま貼って構いません。</p>
+</blockquote>
+<p><strong>④ 内容を確認して保存する</strong></p>
+<p>ピンイン・意味・例文が自動で入るので、必要なら手直しして「カードを保存」。</p>
+<h3>誤入力のチェック</h3>
+<p>Claude が「その語は存在しない／一般的でない」と判断した場合、⚠️ 警告が表示され、保存フォームは開きません。聞き間違いや打ち間違いをそのまま登録してしまうのを防ぐ仕組みです。</p>
+<h3>Claude が返してくれる内容</h3>
+<ul>
+<li>声調記号付きピンイン（文の場合は前後関係から多音字を判断、単体語は読み分けを併記）</li>
+<li>日本語訳</li>
+<li>日常会話で実際に使われる自然な例文 2 つ</li>
+<li>使用上の注意点（目上には使わない、ネット用語、地域差など）</li>
+</ul>
+<hr />
+<h2>6. 既存のカードを直す</h2>
+<p>一覧 → カードをタップ → 「編集・削除」で編集画面に入ります。</p>
+<h3>手で直す</h3>
+<p>4 つの欄を書き換えて「修正を保存」。</p>
+<h3>Claude に精査してもらう</h3>
+<p>「Claudeへ送る文を作る」を押すと、<strong>現在の登録内容を含んだ</strong>プロンプトが生成されます。Claude に送り、返ってきた JSON を貼って「比較する」を押すと、項目ごとに現在の内容と提案が並びます。</p>
+<p>各項目について 3 つから選べます。</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>選択</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>現在のまま</strong></td>
+<td>変更しない</td>
+</tr>
+<tr>
+<td><strong>置き換え</strong>（既定）</td>
+<td>Claude の提案で上書き</td>
+</tr>
+<tr>
+<td><strong>追記</strong></td>
+<td>現在の内容の後ろに <code>／</code> で繋げて追加</td>
+</tr>
+</tbody>
+</table></div>
+<p>反映される内容はテキストエリアで自由に手直しできます。納得したら「この内容でカードを更新」。</p>
+<p>Claude が現在の登録内容の誤りを指摘した場合は、⚠️ として上部に表示されます。</p>
+<h3>削除</h3>
+<p>編集画面の下部「このカードを削除」。確認ダイアログが出ます。<strong>そのカードの学習履歴も一緒に消えます。</strong></p>
+<hr />
+<h2>7. 設定</h2>
+<h3>7.1 学習の設定</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>説明</th>
+<th>目安</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1日の新規カード上限</strong></td>
+<td>1 日に何枚の未学習カードを出すか</td>
+<td>20 枚。復習が溜まってきたら減らす</td>
+</tr>
+<tr>
+<td><strong>目標記憶率</strong></td>
+<td>復習時にどれくらい覚えていたいか</td>
+<td><strong>90%</strong> が標準。95% にすると復習が大幅に増える。80% は効率重視だが忘れやすい</td>
+</tr>
+<tr>
+<td><strong>出題方向</strong></td>
+<td>カードの表面に出す言語</td>
+<td>中国語 → 日本語（読解重視）／ 日本語 → 中国語（作文重視）</td>
+</tr>
+<tr>
+<td><strong>新規カードの順序</strong></td>
+<td>未学習カードを出す順番</td>
+<td>メモの順 / ランダム</td>
+</tr>
+</tbody>
+</table></div>
+<h3>7.2 セッションの設定</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1回の学習で出題する問題数</strong></td>
+<td>0 で無制限。「今日は 20 問だけ」と決めたいときに</td>
+</tr>
+<tr>
+<td><strong>出題傾向</strong></td>
+<td><strong>復習優先</strong>（既定・推奨）／ 未学習優先 ／ ランダム</td>
+</tr>
+<tr>
+<td><strong>復習カードを挟む間隔</strong></td>
+<td>N 問ごとに復習カードを差し込む。0 で無効。<strong>この設定は出題傾向より優先されます</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>注意</strong>: 間違えたカードが同じ学習内で 1 分後・10 分後に再出題されるのは、<strong>「復習優先」のときだけ</strong>です。他の傾向を選ぶと再出題されず、次回以降の学習に回ります。</p>
+</blockquote>
+<h3>7.3 目標記憶率の選び方</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>設定</th>
+<th>復習量</th>
+<th>向いている人</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>80%</td>
+<td>少ない</td>
+<td>とにかく多くの語に触れたい</td>
+</tr>
+<tr>
+<td>85%</td>
+<td>やや少ない</td>
+<td>復習の負担を抑えたい</td>
+</tr>
+<tr>
+<td><strong>90%</strong></td>
+<td>標準</td>
+<td><strong>迷ったらこれ</strong></td>
+</tr>
+<tr>
+<td>95%</td>
+<td>多い</td>
+<td>試験前など、確実性を優先したい</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>8. バックアップと移行</h2>
+<h3>8.1 なぜバックアップが要るか</h3>
+<p>進捗はブラウザの中（または Claude の会話の中）に保存されています。以下の場合に失われます。</p>
+<ul>
+<li>ブラウザのデータを消したとき</li>
+<li>別の端末・別のブラウザで開いたとき</li>
+<li><strong>Claude で使っている場合、別の会話に移ったとき</strong></li>
+<li>HTML ファイル自体を新しい版に差し替えたとき</li>
+</ul>
+<p><strong>定期的な CSV 書き出しを強く推奨します。</strong></p>
+<h3>8.2 CSV を書き出す</h3>
+<p>設定 →「CSVファイルをダウンロード」。全カードが学習進捗つきで保存されます。</p>
+<ul>
+<li>ファイル名は <code>&lt;HTMLのファイル名&gt;_&lt;日時&gt;.csv</code></li>
+<li>Excel / Google スプレッドシートでそのまま開けます（文字化けしません）</li>
+</ul>
+<h3>8.3 CSV を読み込む</h3>
+<p>設定 →「CSVを読み込む」でファイルを選び、「選んだCSVを取り込む」。</p>
+<ul>
+<li><strong>中国語が一致するカードは上書き</strong>、無いものは追加されます</li>
+<li>「学習進捗も一緒に取り込む」のチェックを外すと、カードの内容だけを取り込みます</li>
+</ul>
+<p><strong>新しい版の HTML に乗り換える手順</strong>:</p>
+<ol>
+<li>古い版で CSV を書き出す</li>
+<li>新しい版の HTML を開く</li>
+<li>設定 → CSV を読み込む（進捗込みで）</li>
+</ol>
+<blockquote>
+<p>復習間隔・難易度・復習回数は引き継がれますが、「学習ステップの途中だったカード」の細かい位置と「最後に学習した日時」は引き継がれません。実用上は問題ない範囲ですが、厳密には一致しません。</p>
+</blockquote>
+<h3>8.4 復習履歴の書き出し</h3>
+<p>設定 →「復習履歴のCSVをダウンロード」。1 回ごとの採点記録（いつ・どのカードを・どう評価したか）が出力されます。学習の分析や、将来 FSRS のパラメータを自分用に最適化するための素材になります。<strong>読み込みには対応していません。</strong></p>
+<h3>8.5 リセット</h3>
+<p>設定 →「学習進捗をすべてリセット」。<code>S</code>（各カードの学習状態）と復習履歴が消えます。<strong>カードそのもの（追加したカードや編集内容）は残ります。</strong> 取り消せません。</p>
+<hr />
+<h2>9. 困ったときは</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>症状</th>
+<th>対処</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>「この環境では進捗を保存できません」と出る</strong></td>
+<td>ブラウザのプライベートモードやストレージ無効設定が原因。通常モードの Safari / Chrome で開き直してください</td>
+</tr>
+<tr>
+<td><strong>画面上部に赤い帯が出た</strong></td>
+<td>保存失敗かプログラムエラーです。自動で再試行されます。<strong>その帯をスクリーンショットして相談</strong>すると原因を特定できます</td>
+</tr>
+<tr>
+<td><strong>下部に「まだ保存されていません」と出続ける</strong></td>
+<td>「今すぐ再試行」を押してください。それでも消えない場合は CSV を書き出して退避してください</td>
+</tr>
+<tr>
+<td><strong>進捗が消えた</strong></td>
+<td>①別の会話・別のブラウザで開いていないか確認 ②CSV のバックアップがあれば読み込む</td>
+</tr>
+<tr>
+<td><strong>JSON を読み取れませんと出る</strong></td>
+<td>Claude の返事のうち <code>{</code> から <code>}</code> までを含む部分を、省略せずに貼り付けてください</td>
+</tr>
+<tr>
+<td><strong>ピンインで検索できない</strong></td>
+<td>声調記号なしでは一致しません。中国語か日本語で検索してください</td>
+</tr>
+<tr>
+<td><strong>画面が真っ白／JavaScript が必要と出る</strong></td>
+<td>ファイルアプリのプレビューではなく、共有ボタンから「Safariで開く」を選んでください</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>10. 用語</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FSRS</strong></td>
+<td>Free Spaced Repetition Scheduler。記憶の忘却曲線をモデル化し、最適な復習日を計算するアルゴリズム。本アプリは第 5 世代（FSRS-5）を使用</td>
+</tr>
+<tr>
+<td><strong>安定度（Stability）</strong></td>
+<td>その記憶が何日もつかの推定値。復習に成功するほど大きくなる。詳細画面に表示されます</td>
+</tr>
+<tr>
+<td><strong>難易度（Difficulty）</strong></td>
+<td>そのカードの覚えにくさ。1〜10。間違えるほど上がる</td>
+</tr>
+<tr>
+<td><strong>未着手</strong></td>
+<td>まだ一度も学習していない</td>
+</tr>
+<tr>
+<td><strong>学習中</strong></td>
+<td>学習を始めたが、まだ日単位の復習間隔に到達していない（分単位で繰り返す段階）</td>
+</tr>
+<tr>
+<td><strong>復習</strong></td>
+<td>日単位の間隔で復習する段階。実質的な「習得済み」</td>
+</tr>
+<tr>
+<td><strong>再学習</strong></td>
+<td>復習段階で忘れてしまい、やり直している状態</td>
+</tr>
+<tr>
+<td><strong>習熟度</strong></td>
+<td>本アプリ独自の指標。学習状態と安定度から計算した「定着の深さ」。一覧の並び替えに使用</td>
+</tr>
+</tbody>
+</table></div>
+</article>
+<article class="doc" id="doc-roadmap" data-doc="roadmap">
+  <header class="doc-head">
+    <p class="eyebrow">汉语卡片</p>
+    <h1>改修・拡張提案</h1>
+    <p class="lede">直すべき点と次に足すもの</p>
+  </header>
+<p>現行版（<code>Chinesewords_0822.html</code>）を踏まえた、修正すべき点と拡張の候補です。
+<strong>単一 HTML ファイル・外部依存ゼロ・オフライン動作</strong> という設計上の制約を守ることを前提としています。</p>
+<p>各項目には次の指標を付けています。</p>
+<ul>
+<li><strong>効果</strong>: ★☆☆（限定的）〜 ★★★（体験が明確に変わる）</li>
+<li><strong>コスト</strong>: S（数十行）／ M（100〜300 行）／ L（構造変更を伴う）</li>
+<li><strong>互換性リスク</strong>: 低 / 中 / 高</li>
+</ul>
+<hr />
+<h2>A. 先に直したい点（バグ・不整合）</h2>
+<h3>A-1. ピンイン検索が声調記号に一致しない ★★★ / S / 低</h3>
+<p><code>py</code> は <code>shì ér bù jiàn</code> のように声調記号つきで格納されているため、<code>shi</code> では検索できません。実用上いちばん困る欠陥です。</p>
+<p><strong>修正案</strong> — 検索用に正規化した文字列を用意する:</p>
+<pre><code class="language-js">// 声調記号を取り除く（NFD 正規化して結合用ダイアクリティカルマークを除去）
+const deTone = s =&gt; (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+
+// カード読み込み後に一度だけ索引を作る（毎回の検索で正規化しない）
+const PYX = new Map();          // id -&gt; 正規化ピンイン
+function buildSearchIndex(){
+  PYX.clear();
+  for(const c of CARDS) PYX.set(c.id, deTone(c.py));
+}
+
+// 検索条件に追加
+const qn = deTone(q);
+hit = CARDS.filter(c =&gt;
+  c.zh.includes(q) ||
+  c.py.toLowerCase().includes(q) ||
+  (PYX.get(c.id)||'').includes(qn) ||    // ← 追加
+  c.m.includes(q) || c.n.includes(q));
+</code></pre>
+<p>索引は <code>applyLoadedPayload()</code> の後と、カード追加・編集・削除・CSV 取り込みの後に再構築します。</p>
+<h3>A-2. 検索が無デバウンス ★★☆ / S / 低</h3>
+<p>1 文字ごとに 2,568 件を走査し <code>innerHTML</code> を再構築しています。今は問題になりませんが、語数が 1 万を超えると入力が引っかかります。</p>
+<pre><code class="language-js">let qTimer=null;
+$('#q').oninput=()=&gt;{ clearTimeout(qTimer); qTimer=setTimeout(()=&gt;{bLimit=50;draw()},120); };
+</code></pre>
+<h3>A-3. CSV の往復で <code>step</code> と <code>last</code> が失われる ★★☆ / S / 低</h3>
+<p>エクスポート列に <code>step</code>（学習ステップ位置）と <code>last</code>（前回採点時刻）がありません。インポート時は <code>step: 0</code>、<code>last: Date.now()</code> で再構築されるため、<code>retr(t, S)</code> の経過日数の起点がリセットされます。</p>
+<p><strong>修正案</strong>: 列を 2 つ追加する。読み込み側は <code>ix('学習ステップ')</code> が <code>-1</code> を返す前提で書けば、<strong>列の無い古い CSV もそのまま読める</strong>（現行のインポート実装はすでにこの方式）。</p>
+<pre><code class="language-js">const CSV_COLS=[...既存..., '学習ステップ', '前回学習日時'];
+// import 側
+step: parseInt(iStep&gt;=0?row[iStep]:'0')||0,
+last: (()=&gt;{ const v=Date.parse(iLast&gt;=0?row[iLast]:''); return isFinite(v)?v:Date.now(); })(),
+</code></pre>
+<h3>A-4. 削除したカードを CSV から戻すと ID が変わる ★☆☆ / S / 中</h3>
+<p>既存カードを削除すると <code>DL</code> に <code>id</code> が残ります。同じ語を CSV から再インポートすると <code>CARDS</code> に無いため新規 <code>u...</code> カードとして追加され、元の <code>id</code> には戻りません。</p>
+<p><strong>修正案</strong>: インポート時、<code>zh</code> が <code>DL</code> に載っている削除済みカードと一致したら <code>DL</code> から取り除いて元の <code>id</code> で復活させる。復活の可否をユーザーに確認する UI を出すのが親切です。</p>
+<h3>A-5. <code>LOG.revDone</code> の計上条件 ★☆☆ / S / 低</h3>
+<pre><code class="language-js">if(isNew) LOG.newDone++; else if(c.st===2 || g===1) LOG.revDone++;
+</code></pre>
+<p>学習中カードに「普通」を付けて卒業しなかった場合、復習回数に数えられません。意図的ならコメントを添え、そうでなければ <code>else LOG.revDone++</code> に変更します。</p>
+<h3>A-6. <code>esc()</code> がシングルクォートを変換しない ★☆☆ / S / 低</h3>
+<p>現状は全属性がダブルクォートなので実害はありませんが、防御として <code>'</code> → <code>&amp;#39;</code> を追加しておくと将来の改修で壊れません。</p>
+<h3>A-7. <code>renderDiff</code> の色がハードコード ★☆☆ / S / 低</h3>
+<p><code>#EDF5F0</code> <code>#CFE3D8</code> が直書きされています。CSS 変数（<code>--good</code> 系）に寄せると、後述のダークモード対応が一箇所で済みます。</p>
+<hr />
+<h2>B. 費用対効果の高い機能追加</h2>
+<h3>B-1. 一覧の状態フィルタ ★★★ / S / 低</h3>
+<p>並び替えに続く自然な拡張です。並び替えセレクトの隣に、もう 1 つセレクトを置きます。</p>
+<pre><code>[すべて / 未着手 / 学習中・再学習 / 復習 / 自分で追加した分]
+</code></pre>
+<p><code>masteryScore()</code> と同じく <code>S[c.id]</code> を見るだけなので実装は 20 行程度。<strong>「追加分のみ」は自分で足した語を管理するのに特に有用</strong>です（<code>isUserCard()</code> で判定済み）。</p>
+<h3>B-2. 一覧項目に習熟度バーを表示 ★★☆ / S / 低</h3>
+<p>現在は「復習 3日」のようなテキストのみ。安定度を対数スケールで 0〜100% に写した細いバーを添えると、習熟度順で並べたときの見通しが一気に良くなります。</p>
+<pre><code class="language-js">const pct = st &amp;&amp; st.st===2 ? Math.min(100, Math.round(Math.log10(1+st.S)/Math.log10(1+365)*100)) : 0;
+</code></pre>
+<h3>B-3. 削除の取り消し（Undo） ★★☆ / S / 低</h3>
+<p>削除は <code>confirm</code> のみで、押し間違えると学習履歴ごと消えます。削除直前の <code>{card, state, 元のindex}</code> を保持し、トーストに「元に戻す」ボタンを出すだけで安心感が大きく変わります。</p>
+<h3>B-4. キーボードショートカット ★★☆ / S / 低</h3>
+<p>パソコンで使う場合、<code>Space</code> で答えを表示、<code>1</code>〜<code>4</code> で採点できると速度が段違いです。</p>
+<pre><code class="language-js">document.addEventListener('keydown', e=&gt;{
+  if(view!=='home' || !queue.length) return;
+  if(e.key===' '){ e.preventDefault(); show(); }
+  if(revealed &amp;&amp; /^[1-4]$/.test(e.key)) document.querySelectorAll('.grades button')[+e.key-1].click();
+});
+</code></pre>
+<h3>B-5. 発音の読み上げ ★★★ / S / 低</h3>
+<p>Web Speech API はブラウザ内蔵で、外部依存になりません。</p>
+<pre><code class="language-js">function speak(zh){
+  try{
+    const u=new SpeechSynthesisUtterance(zh);
+    u.lang='zh-CN'; u.rate=0.9;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+</code></pre>
+<p>カード裏面と詳細モーダルに 🔊 ボタンを置きます。<strong>中国語学習アプリとして効果が非常に大きい割に実装は最小</strong>です。ただし端末に中国語音声が入っていないと無音になるため、<code>speechSynthesis.getVoices()</code> で <code>zh</code> 系の有無を確認し、無ければボタンを隠す配慮が要ります。</p>
+<h3>B-6. JSON 一括エクスポート／インポート ★★★ / S / 低</h3>
+<p>現在の移行手段は CSV のみで、<code>CFG</code> <code>LOG</code> <code>RL</code> <code>OV</code> <code>DL</code> が引き継げません。保存しているペイロードをそのままファイルにするだけなので実装は数十行です。</p>
+<pre><code class="language-js">function exportAll(){
+  const payload={v:2, s:S, cfg:CFG, log:LOG, uc:UC, ov:OV, dl:DL, rl:RL};
+  downloadBlob(new Blob([JSON.stringify(payload)],{type:'application/json'}),
+               baseName()+'_full_'+stampNow()+'.json');
+}
+</code></pre>
+<p>インポート側は <code>v</code> を見て分岐し、<code>v</code> が無ければ現行形式として読みます。<strong>会話をまたぐ移行・端末間の移行がこれで完全になります。</strong> 優先度は高めです。</p>
+<h3>B-7. 統計画面 ★★☆ / M / 低</h3>
+<p><code>RL</code>（復習履歴）に十分な素材が揃っているのに、現在は書き出すだけで画面上に活用がありません。</p>
+<ul>
+<li>直近 30 日の学習量の棒グラフ</li>
+<li>評価の内訳（もう一度／難しい／普通／簡単の比率）＝実効的な正答率</li>
+<li>安定度の分布ヒストグラム</li>
+<li>今後 30 日の復習予定の予測</li>
+</ul>
+<p>すべて <code>S</code> と <code>RL</code> から計算でき、インライン SVG で描けます（ライブラリ不要）。</p>
+<h3>B-8. ダークモード ★★☆ / S / 低</h3>
+<p>CSS 変数が整理されているため、<code>@media (prefers-color-scheme: dark)</code> で <code>:root</code> の 10 変数を再定義するだけでほぼ完成します。障害は A-7 のハードコード色のみ。</p>
+<pre><code class="language-css">@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#171A21; --paper-2:#1F2430; --card:#1C212B;
+    --ink:#D9E2F5; --ink-soft:#8C9AB8; --ink-faint:#3A4457;
+    --line:#2C3444; --seal:#E4796B; --seal-soft:#3A2422; --good:#5FB98C;
+  }
+}
+</code></pre>
+<h3>B-9. タグ／デッキ ★★★ / M / 中</h3>
+<p>「HSK4 級」「ビジネス」「ドラマで拾った表現」のように分類できると、学習範囲を絞れます。</p>
+<ul>
+<li>カードに <code>tags: []</code> を追加（無い場合は空配列として扱えば<strong>既存データと互換</strong>）</li>
+<li>一覧にタグフィルタ</li>
+<li>設定に「学習対象のタグ」を追加し、<code>buildQueue()</code> で絞り込む</li>
+</ul>
+<p><code>buildQueue()</code> の冒頭で <code>CARDS</code> を絞るだけなので、アルゴリズム側の変更は不要です。</p>
+<hr />
+<h2>C. 構造の見直し（再設計するなら）</h2>
+<h3>C-1. 語彙データとコードの分離 ★★☆ / L / 中</h3>
+<p>現状は 358 KB の配列リテラルを起動のたびにパースしています。2,568 語なら問題ありませんが、1 万語規模にすると起動が目に見えて遅くなり、ファイルの編集も困難になります。</p>
+<p><strong>選択肢:</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>利点</th>
+<th>欠点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>現状維持（インラインリテラル）</td>
+<td>単一ファイルを維持できる</td>
+<td>大規模化に弱い</td>
+</tr>
+<tr>
+<td><code>&lt;script type="application/json"&gt;</code> に格納</td>
+<td>パース時期を制御できる。エディタが軽くなる</td>
+<td>単一ファイルは維持、効果は限定的</td>
+</tr>
+<tr>
+<td>IndexedDB に初回投入</td>
+<td>大規模化に強い、部分読み込み可</td>
+<td>初回起動が複雑に。単一ファイル性は保てる</td>
+</tr>
+<tr>
+<td>別 JSON ファイル + fetch</td>
+<td>編集が容易</td>
+<td><strong><code>file://</code> では CORS で読めない。単一ファイル原則に反する</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>推奨</strong>: 語数が 5,000 を超えるまでは現状維持。超えるなら IndexedDB。</p>
+<h3>C-2. 状態管理の一元化 ★★☆ / L / 中</h3>
+<p>現在、<code>S</code> <code>CFG</code> <code>LOG</code> <code>UC</code> <code>OV</code> <code>DL</code> <code>RL</code> が独立したグローバル変数で、保存時に手作業で組み立てています。1 つの <code>store</code> オブジェクトに束ね、<code>store.mutate(fn)</code> を通してのみ変更する形にすると、保存漏れ（<code>dirty</code> の立て忘れ）を構造的に防げます。</p>
+<h3>C-3. スキーマバージョンの導入 ★★★ / S / 低</h3>
+<p><strong>これは早めにやっておくべきです。</strong> 現在、保存ペイロードにバージョン番号がありません。将来データ構造を変えるとき、旧形式か新形式かを判別する手掛かりが無くなります。</p>
+<pre><code class="language-js">const SCHEMA=2;
+// save
+const payload=JSON.stringify({v:SCHEMA, s:S, cfg:CFG, log:LOG, uc:UC, ov:OV, dl:DL});
+// load
+function migrate(o){
+  const v=o.v||1;              // v が無ければ現行形式（=1）とみなす
+  if(v&lt;2){ /* v1 → v2 の変換をここに書く */ }
+  return o;
+}
+</code></pre>
+<p><code>v</code> が無い既存データを <code>1</code> として扱えば、<strong>今のデータを一切壊さずにバージョン管理を始められます</strong>。</p>
+<h3>C-4. 描画の差分化 ★☆☆ / L / 中</h3>
+<p><code>main.innerHTML</code> の全置換は、画面数が少ない今は妥当な選択です（コードが単純で、状態の取りこぼしが起きない）。ただし一覧のスクロール位置が並び替えのたびにリセットされるなど、細かい不便があります。</p>
+<p><strong>優先度は低め。</strong> やるなら一覧リストだけを部分更新する程度に留めるのが費用対効果に見合います。</p>
+<h3>C-5. FSRS 部分のテスト ★★☆ / M / 低</h3>
+<p><code>D0</code> <code>S0</code> <code>retr</code> <code>nextInterval</code> <code>nextD</code> <code>recallS</code> <code>forgetS</code> <code>rate</code> はすべて純粋関数（<code>rate</code> は <code>S</code> に依存するが分離可能）です。この部分だけを別ファイルに切り出せば Node でユニットテストできます。</p>
+<pre><code>tests/fsrs.test.js
+  - 既知の入力に対する出力の回帰テスト
+  - 状態遷移の網羅（0→1→2、2→3→2 など）
+  - nextInterval が retention に対して単調減少すること
+</code></pre>
+<p>アルゴリズムを触るときの安全網として価値があります。</p>
+<h3>C-6. PWA 化 ★★☆ / M / 中</h3>
+<p>Service Worker と manifest を追加すればホーム画面に追加でき、アプリらしく起動できます。</p>
+<p><strong>ただし <code>file://</code> では Service Worker が動きません。</strong> HTTPS 配信が前提になるため、「単一ファイルをどこにでも置ける」という現在の強みを一部手放すことになります。採用は配布方法の方針とセットで判断してください。</p>
+<hr />
+<h2>D. FSRS の精度向上</h2>
+<h3>D-1. パラメータの個人最適化 ★★★ / L / 中</h3>
+<p>現在の <code>W</code>（19 個）は FSRS-5 の汎用既定値です。<code>RL</code> に採点履歴が蓄積されているので、これを使って自分専用に最適化できます。</p>
+<p><strong>現実的な進め方:</strong></p>
+<ol>
+<li>設定から復習履歴 CSV を書き出す（<strong>実装済み</strong>）</li>
+<li>外部の <code>fsrs-optimizer</code>（Python）などに掛けて最適化した <code>W</code> を得る</li>
+<li>設定画面に「FSRS パラメータ」の入力欄を設け、19 個の数値を貼り付けられるようにする（<strong>未実装／実装コストは小</strong>）</li>
+</ol>
+<p><code>CFG.w</code>（配列、未設定なら既定値）として保存すれば互換性の問題もありません。<strong>手順 3 だけ実装すれば、残りは既存の書き出し機能で完結します。</strong> 費用対効果が非常に高い提案です。</p>
+<h3>D-2. 復習履歴の取り込み対応 ★☆☆ / M / 中</h3>
+<p>現在 <code>RL</code> は書き出し専用です。B-6 の JSON 一括エクスポートを実装すれば履歴も含めて移行できるため、CSV での取り込みは不要になります。<strong>B-6 を優先すべきです。</strong></p>
+<h3>D-3. 「もう一度」の扱いを設定可能に ★☆☆ / S / 低</h3>
+<p>現在、学習ステップでの同一セッション再出題は「復習優先」のときのみ有効という、やや発見しづらい仕様です（設定画面に注記あり）。出題傾向と切り離した独立の設定にするほうが素直です。</p>
+<hr />
+<h2>E. 優先順位のまとめ</h2>
+<p>すぐ着手する価値がある順に並べたものです。</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>順</th>
+<th>項目</th>
+<th>効果</th>
+<th>コスト</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>A-1</strong> ピンイン検索の正規化</td>
+<td>★★★</td>
+<td>S</td>
+<td>日常的に困る欠陥。実装は 10 行程度</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>B-6</strong> JSON 一括エクスポート／インポート</td>
+<td>★★★</td>
+<td>S</td>
+<td>データ消失リスクを構造的に解消する</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>C-3</strong> スキーマバージョンの導入</td>
+<td>★★★</td>
+<td>S</td>
+<td>後になるほど導入コストが上がる</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>B-5</strong> 発音の読み上げ</td>
+<td>★★★</td>
+<td>S</td>
+<td>学習効果に直結、外部依存なし</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>B-1</strong> 一覧の状態フィルタ</td>
+<td>★★★</td>
+<td>S</td>
+<td>並び替えの自然な続き</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>A-3</strong> CSV に step / last を追加</td>
+<td>★★☆</td>
+<td>S</td>
+<td>移行の正確性</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>B-3</strong> 削除の取り消し</td>
+<td>★★☆</td>
+<td>S</td>
+<td>事故防止</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>D-1</strong> FSRS パラメータの手動設定欄</td>
+<td>★★★</td>
+<td>S</td>
+<td>素材はすでに揃っている</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>B-8</strong> ダークモード</td>
+<td>★★☆</td>
+<td>S</td>
+<td>CSS 変数が整理済みで容易</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>B-7</strong> 統計画面</td>
+<td>★★☆</td>
+<td>M</td>
+<td>蓄積データの活用</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>B-9</strong> タグ／デッキ</td>
+<td>★★★</td>
+<td>M</td>
+<td>語数が増えたら必須になる</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>C-5</strong> FSRS のテスト</td>
+<td>★★☆</td>
+<td>M</td>
+<td>アルゴリズム改修の前提</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>1〜9 はいずれも小規模で、現在の構造を壊さずに追加できます。</strong> まとめて 1 回の改修に収めることも可能です。</p>
+<hr />
+<h2>F. 実装するときの約束事</h2>
+<p>改修が現在の設計思想を壊さないよう、以下を守ってください。</p>
+<ol>
+<li><strong>外部依存を増やさない</strong> — CDN、Web フォント、外部 API を使わない。オフラインで完全に動くことがこのアプリの前提です。</li>
+<li><strong>単一ファイルを維持する</strong> — 分割したくなったら、まず「本当に必要か」を問う。</li>
+<li><strong>保存データの後方互換を必ず担保する</strong> — 新しいキーには既定値を用意し、使用側にフォールバックを置く。既存キーの意味は変えない。</li>
+<li><strong><code>id</code> の比較は <code>String()</code> 経由で</strong> — number と string が混在しています。</li>
+<li><strong>ユーザー入力は <code>esc()</code> を通す</strong> — <code>innerHTML</code> を多用する構造のため必須です。</li>
+<li><strong>保存を伴う変更の後は <code>scheduleSave()</code> を呼ぶ</strong> — 呼び忘れると変更が消えます。</li>
+<li><strong>iPhone の実機幅で確認する</strong> — 320px と 390px で崩れないこと。</li>
+<li><strong>改修後は必ず CSV を書き出して読み戻し、往復で壊れないことを確認する。</strong></li>
+</ol>
+</article>
+  </main>
+</div>
+
+<script>
+(function(){
+  var docs = Array.prototype.slice.call(document.querySelectorAll('.doc'));
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var toc  = document.getElementById('toc');
+  var links = [];
+
+  function buildToc(key){
+    var doc = document.getElementById('doc-' + key);
+    toc.innerHTML = '';
+    links = [];
+    Array.prototype.forEach.call(doc.querySelectorAll('h2'), function(h, i){
+      if(!h.id) h.id = key + '-h' + i;
+      var txt = h.textContent.trim();
+      var m = txt.match(/^(\d+|[A-F])[.\-]\s*(.*)$/);
+      var a = document.createElement('a');
+      a.href = '#' + h.id;
+      if(m){
+        a.innerHTML = '<span class="n"></span>';
+        a.firstChild.textContent = m[1];
+        a.appendChild(document.createTextNode(m[2]));
+      }else{
+        a.textContent = txt;
+      }
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        h.scrollIntoView({behavior:'smooth', block:'start'});
+        history.replaceState(null, '', '#' + h.id);
+      });
+      toc.appendChild(a);
+      links.push({a:a, h:h});
+    });
+    spy();
+  }
+
+  function show(key, push){
+    docs.forEach(function(d){ d.classList.toggle('on', d.dataset.doc === key); });
+    tabs.forEach(function(t){ t.setAttribute('aria-current', String(t.dataset.go === key)); });
+    buildToc(key);
+    window.scrollTo(0, 0);
+    try{ localStorage.setItem('cwdocs-tab', key); }catch(e){}
+  }
+
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ show(t.dataset.go); });
+  });
+
+  function spy(){
+    if(!links.length) return;
+    var best = 0;
+    for(var i = 0; i < links.length; i++){
+      if(links[i].h.getBoundingClientRect().top <= 90) best = i;
+    }
+    links.forEach(function(l, i){ l.a.classList.toggle('on', i === best); });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){ spy(); ticking = false; });
+  }, {passive:true});
+
+  var start = 'spec';
+  try{
+    var saved = localStorage.getItem('cwdocs-tab');
+    if(saved && document.getElementById('doc-' + saved)) start = saved;
+  }catch(e){}
+  show(start);
+
+  // 表示切替（自動 → ライト → ダーク）
+  var root = document.documentElement;
+  var tt = document.getElementById('tt');
+  var modes = ['', 'light', 'dark'];
+  var names = {'':'表示：自動', 'light':'表示：ライト', 'dark':'表示：ダーク'};
+  var mi = 0;
+  try{
+    var sv = localStorage.getItem('cwdocs-theme');
+    if(sv !== null){ mi = modes.indexOf(sv); if(mi < 0) mi = 0; }
+  }catch(e){}
+  function apply(){
+    if(modes[mi]) root.setAttribute('data-theme', modes[mi]);
+    else root.removeAttribute('data-theme');
+    tt.textContent = names[modes[mi]];
+    try{ localStorage.setItem('cwdocs-theme', modes[mi]); }catch(e){}
+  }
+  tt.addEventListener('click', function(){ mi = (mi + 1) % modes.length; apply(); });
+  apply();
+})();
+</script>
+
+</body>
+</html>
